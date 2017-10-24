@@ -1,0 +1,20 @@
+{
+  "name": "git-push-all",
+  "version": "0.1.0",
+  "bin": {
+    "gal": "gal.js"
+  },
+  "description": "Quickly commit all changes and push to GitHub",
+  "main": "gal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Samuel Smolkin <sam@future-precedent.org>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "command-line-args": "^4.0.7",
+    "command-line-commands": "^2.0.1",
+    "shelljs": "^0.7.8"
+  }
+}
