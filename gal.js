@@ -8,10 +8,13 @@ const commandLineCommands = require('command-line-commands');
 const configPath = './config.json';
 const config = require(configPath);
 
-config.remote = "master";
-console.log(config);
+const currentBranch = shell.exec('git branch | grep \\*', {silent:true}).stdout.slice(2);
 
-fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+shell.exec(`git add -A &&
+  git commit -m "gal-commit" &&
+  git push -u ${config.remote} ${currentBranch}"`);
+
+/* fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 
 console.log('Complete!');
 
@@ -26,4 +29,4 @@ if (command === null) {
       name: ''
     }
   ]
-}
+} */
