@@ -24,7 +24,8 @@ if (command === 'config') {
       name: 'message',
       alias: 'm',
       type: String,
-      defaultOption: true
+      defaultOption: true,
+      multiple: true
     },
     {
       name: 'remote',
@@ -36,7 +37,7 @@ if (command === 'config') {
   const options = commandLineArgs(optionDefinitions, {argv});
   
   if (options.message) {
-    config.message = options.message;
+    config.message = options.message.join(' ');
   }
   if (options.remote) {
     config.remote = options.remote;
@@ -54,7 +55,8 @@ else {
       alias: 'm',
       type: String,
       defaultOption: true,
-      defaultValue: config.message
+      defaultValue: config.message,
+      multiple: true
     },
     {
       name: 'remote',
@@ -73,7 +75,7 @@ else {
   const options = commandLineArgs(optionDefinitions, {argv});
 
   shell.exec(`git add -A &&
-    git commit -m "${options.message}" &&
+    git commit -m "${options.message.join(' ')}" &&
     git push -u ${options.remote} ${options.branch}`);
 }
 
