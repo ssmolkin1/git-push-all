@@ -12,7 +12,7 @@ const currentBranch = shell.exec('git branch | grep \\*', {silent:true}).stdout.
 
 shell.exec(`git add -A &&
   git commit -m "gal-commit" &&
-  git push -u ${config.remote} ${currentBranch}"`);
+  git push -u ${config.remote} ${currentBranch}`);
 
 /* fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 
