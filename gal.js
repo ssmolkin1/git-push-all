@@ -11,14 +11,47 @@ const config = require(configPath);
 const validCommands = [null, 'config'];
 const {command, argv} = commandLineCommands(validCommands);
 
+// Utility requires git to run
+if (!shell.which('git')) {
+  shell.echo('Sorry, this script requires git. Please install git and try again.');
+  shell.exit(1);
+}
 
-
-if (command === null) {
+// Config command sets default configs
+if (command === 'config') {
   const optionDefinitions = [
     {
       name: 'message',
       alias: 'm',
+      type: String,
+      defaultOption: true
+    },
+    {
+      name: 'remote',
+      alias: 'r',
       type: String
+    }
+  ];
+
+  const options = commandLineArgs(optionDefinitions, {argv});
+  
+  if (options.message) {
+    config.message = options.message;
+  }
+  if (options.remote) {
+    config.remote = options.remote;
+  }
+
+  fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+} 
+// If no command, run gal with options
+else {
+  const optionDefinitions = [
+    {
+      name: 'message',
+      alias: 'm',
+      type: String,
+      defaultOption: true
     },
     {
       name: 'remote',
@@ -44,6 +77,5 @@ if (command === null) {
   
   gal(options.message, options.remote, options.branch);
 }
-  
 
-// fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+// CommandLineArgs and CommandLineOptions auto throw errors on invalid commands or options
