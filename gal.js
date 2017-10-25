@@ -25,7 +25,7 @@ if (command === 'config') {
       alias: 'm',
       type: String,
       defaultOption: true,
-      multiple: true
+      multiple: true    // takes an array of values...
     },
     {
       name: 'remote',
@@ -37,7 +37,7 @@ if (command === 'config') {
   const options = commandLineArgs(optionDefinitions, {argv});
   
   if (options.message) {
-    config.message = options.message.join(' ');
+    config.message = options.message.join(' ');   // ...which are joined, thereby obviating the need to put quotes around the commit message
   }
   if (options.remote) {
     config.remote = options.remote;
