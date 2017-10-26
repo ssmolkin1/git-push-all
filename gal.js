@@ -21,7 +21,7 @@ if (!shell.which('git')) {
 if (command === 's') {
   shell.exec('git status');
 }
-// p command sets up credential storage using libsecret. Requires curl and only works on Debian-based Linux distros (uses apt repository)
+// cred command sets up credential storage using libsecret. Requires curl and only works on Debian-based Linux distros (uses apt repository)
 else if (command === 'p') {
   shell.config.silent = true;
   
@@ -139,6 +139,11 @@ else {
       type: Boolean
     },
     {
+      name: 'push-only', 
+      alias: 'p',
+      type: Boolean
+    },
+    {
       name: 'status', 
       alias: 's',
       type: Boolean
@@ -147,16 +152,21 @@ else {
 
   const options = commandLineArgs(optionDefinitions, {argv});
 
-  shell.exec(`git add -A`);
-  
-  if (!options['add-only']) {
-    shell.exec(`git commit -m "${options.message.join(' ')}"`);
-  
-    if (!options['commit-only']) {
-      shell.exec(`git push -u ${options.remote} ${options.branch}`);
+  if (options['push-only']) {
+    shell.exec(`git push -u ${options.remote} ${options.branch}`);
+  }
+  else {
+    shell.exec(`git add -A`);
+    
+    if (!options['add-only']) {
+      shell.exec(`git commit -m "${options.message.join(' ')}"`);
+      
+      if (!options['commit-only']) {
+        shell.exec(`git push -u ${options.remote} ${options.branch}`);
+      }
     }
   }
-
+   
   if (options.status) {
     shell.exec(`git status`);
   }
