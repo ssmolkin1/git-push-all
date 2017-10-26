@@ -8,7 +8,7 @@ const commandLineCommands = require('command-line-commands');
 const configPath = './config.json';
 const config = require(configPath);
 
-const validCommands = [null, 'config', 'p', 's', 'b'];
+const validCommands = [null, 'config', 'store', 's', 'b'];
 const {command, argv} = commandLineCommands(validCommands);
 
 // Utility requires git to work
@@ -25,8 +25,8 @@ if (command === 'b') {
 else if (command === 's') {
   shell.exec('git status');
 }
-// p command sets up credential storage using libsecret. Requires curl and only works on Debian-based Linux distros (uses apt repository)
-else if (command === 'p') {
+// store command sets up credential storage using libsecret. Requires curl and only works on Debian-based Linux distros (uses apt repository)
+else if (command === 'store') {
   shell.config.silent = true;
   
   if (!shell.which('apt')) {
