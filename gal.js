@@ -8,7 +8,7 @@ const commandLineCommands = require('command-line-commands');
 const configPath = './config.json';
 const config = require(configPath);
 
-const validCommands = [null, 'config', 'p', 's'];
+const validCommands = [null, 'config', 'p', 's', 'b'];
 const {command, argv} = commandLineCommands(validCommands);
 
 // Utility requires git to work
@@ -17,8 +17,12 @@ if (!shell.which('git')) {
   shell.exit(1);
 }
 
+// b command checks branch
+if (command === 'b') {
+  shell.exec('git branch');
+}
 // s command just runs git status
-if (command === 's') {
+else if (command === 's') {
   shell.exec('git status');
 }
 // p command sets up credential storage using libsecret. Requires curl and only works on Debian-based Linux distros (uses apt repository)
@@ -153,27 +157,38 @@ else {
       type: Boolean
     },
     {
+      name: 'add-commit-only', 
+      alias: 'o',
+      type: Boolean
+    },
+    {
       name: 'status', 
       alias: 's',
+      type: Boolean
+    },
+    {
+      name: 'pull', 
+      alias: 'l',
       type: Boolean
     }
   ];
 
   const options = commandLineArgs(optionDefinitions, {argv});
-
-  if (options['push-only']) {
-    shell.exec(`git push -u ${options.remote} ${options.branch}`);
-  }
-  else {
-    shell.exec(`git add -A`);
-    
+  
+  if (options.pull) {
+    shell.exec(`git pull ${options.remote} ${options.branch}`);
+  } else {
+    if (!options['push-only'] && !options['commit-only']) {
+      shell.exec(`git add -A`);
+    }
     if (!options['add-only']) {
-      shell.exec(`git commit -m "${options.message.join(' ')}"`);
-      
-      if (!options['commit-only']) {
+      if (!options['push-only']) {
+        shell.exec(`git commit -m "${options.message.join(' ')}"`);
+      } 
+      if (!options['commit-only'] && !options['add-commit-only']) {
         shell.exec(`git push -u ${options.remote} ${options.branch}`);
       }
-    }
+    }    
   }
    
   if (options.status) {
