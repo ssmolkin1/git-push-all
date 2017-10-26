@@ -107,14 +107,18 @@ else if (command === 'config') {
 
   const options = commandLineArgs(optionDefinitions, {argv});
   
-  if (options.message) {
-    config.message = options.message.join(' ');   // ...which are joined, thereby obviating the need to put quotes around the commit message
+  if (!options.message && !options.remote) {
+    console.log(JSON.stringify(config, null, 2));
+  } else {
+    if (options.message) {
+      config.message = options.message.join(' ');   // ...which are joined, thereby obviating the need to put quotes around the commit message
+    }
+    if (options.remote) {
+      config.remote = options.remote;
+    }
+    
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
   }
-  if (options.remote) {
-    config.remote = options.remote;
-  }
-
-  fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 } 
 // If no command, run gal with options
 else {
