@@ -126,7 +126,7 @@ else {
 
   shell.exec(`git add -A && git commit -m "${options.message.join(' ')}"`);
   
-  if (!options[commit-only]) {
+  if (!options['commit-only']) {
     shell.exec(`git push -u ${options.remote} ${options.branch}`);
   }
 }
