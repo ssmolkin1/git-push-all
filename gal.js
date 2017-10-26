@@ -23,15 +23,14 @@ if (command === 's') {
 }
 // p command sets up credential storage using libsecret. Requires curl and only works on Debian-based Linux distros (uses apt repository)
 else if (command === 'p') {
-  // shell.config.silent = true;
+  shell.config.silent = true;
   
   if (!shell.which('apt')) {
     console.log('Sorry, gal can only set up your credential storage if you are running a Debian-based Linux distribution.');
     shell.exit(1);
   }
   
-  // install libsecret dev files if you don't already have them
-  shell.exec('sudo apt install libsecret.*dev -y');    
+  console.log('Initializing git credential storage with libsecret');
 
   // checks if you have a libsecret folder in your git credentials file and mkdir if not
   var path = '/usr/share/doc/git/contrib/credential';
@@ -41,7 +40,9 @@ else if (command === 'p') {
       console.log('You are not set up yet to store git credentials using libsecret. Gal can set this up for you, but curl is required to install the necessary files. Please install curl and try again.');
       shell.exit(1);
     }
+    console.log(`Making credential storage folder: ${path}/libsecret`);
     shell.exec(`sudo mkdir ${path}/libsecret`);
+    console.log('Done!');
   } 
   
   path += '/libsecret'; 
@@ -53,7 +54,9 @@ else if (command === 'p') {
       console.log('You are not set up yet to store git credentials using libsecret. Gal can set this up for you, but curl is required to install the necessary files. Please install curl and try again.');
       shell.exit(1);
     }
+    console.log(`Downloading Makefile...`);
     shell.exec(`sudo curl -o ${path}/Makefile https://raw.githubusercontent.com/git/git/master/contrib/credential/libsecret/Makefile`);
+    console.log('Done!');
   }
 
   // checks if you have the C file and curl if not
@@ -62,18 +65,24 @@ else if (command === 'p') {
       console.log('You are not set up yet to store git credentials using libsecret. Gal can set this up for you, but curl is required to install the necessary files. Please install curl and try again.');
       shell.exit(1);
     }
+    console.log('Downloading C file...');
     shell.exec(`sudo curl -o ${path}/git-credential-libsecret.c https://raw.githubusercontent.com/git/git/master/contrib/credential/libsecret/git-credential-libsecret.c`);
+    console.log('Done!');
   }
 
-  // checks if made already, and make if not
   if (libsecretContents.indexOf('git-credential-libsecret.o') < 0) {
+    console.log('Checking for latest libsecret dev file and installing or updating to latest if needed...');
+    shell.exec('sudo apt install libsecret.*dev -y');    
+    console.log('Done!');
+    
+    console.log('Building...');
     shell.exec(`sudo make -C ${path}`);
+    console.log('Done!');
   }
 
-  // set up git credential store
+  console.log('Setting up credential storage...');
   shell.exec('git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret');
-
-  console.log('Credential storage using libsecret is now set up. When you enter your GitHub credentials during  your next push, they will be securely saved and you will never need to enter them again (on this machine)!')
+  console.log('Done!\nGit credential storage using libsecret is now set up. Next time you enter your GitHub credentials, they will be securely saved and you will never need to enter them again on this machine!');
 }
 // Config command sets default configs
 else if (command === 'config') {
