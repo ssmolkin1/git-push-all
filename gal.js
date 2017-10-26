@@ -127,6 +127,11 @@ else {
       name: 'commit-only',
       alias: 'c',
       type: Boolean,
+    },
+    {
+      name: 'status',
+      alias: 's',
+      type: Boolean,
     }
   ];
   
@@ -136,5 +141,9 @@ else {
   
   if (!options['commit-only']) {
     shell.exec(`git push -u ${options.remote} ${options.branch}`);
+  }
+
+  if (!options.status) {
+    shell.exec(`git status`);
   }
 }
