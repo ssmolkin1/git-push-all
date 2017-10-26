@@ -13,14 +13,20 @@ const {command, argv} = commandLineCommands(validCommands);
 
 // Utility requires git to work
 if (!shell.which('git')) {
-  console.log('Sorry, this script requires git. Please install git and try again.');
+  console.log('Sorry, it looks like you don\'t have git installed yet. Gal is made for git, so it won\'t help you unless you have that first. Please install git and try again.');
   shell.exit(1);
 }
 
 if (command === 'p') {
   shell.config.silent = true;
+  
+  if (!shell.which('apt')) {
+    console.log('Sorry, gal can only set up your credential storage if you are running a Debian-based Linux distribution.');
+    shell.exit(1);
+  }
+  
   // install libsecret dev files if you don't already have them
-  // shell.exec('sudo apt install libsecret.*dev -y');    //uncomment when done testing
+  shell.exec('sudo apt install libsecret.*dev -y');    
 
   // checks if you have a libsecret folder in your git credentials file and mkdir if not
   var path = '/usr/share/doc/git/contrib/credential/';
@@ -33,7 +39,7 @@ if (command === 'p') {
     shell.exec(`sudo mkdir ${path}`+'libsecret/');
   } 
   
-  path += 'libsecret2/';   // change to libsecret when  done testing
+  path += 'libsecret/'; 
   const libsecretContents = shell.ls(path);
     
   // checks if you have the Makefile and curl if not
@@ -59,8 +65,10 @@ if (command === 'p') {
     shell.exec(`sudo make -C ${path}`);
   }
 
-  // check if git is initialized
+  // set up git credential store
+  shell.exec('git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret');
 
+  console.log('Credential storage using libsecret is now set up. When you enter your GitHub credentials during  your next push, they will be securely saved and you will never need to enter them again (on this machine)!')
 }
 // Config command sets default configs
 else if (command === 'config') {
@@ -130,5 +138,3 @@ else {
     shell.exec(`git push -u ${options.remote} ${options.branch}`);
   }
 }
-
-// CommandLineArgs and CommandLineOptions auto throw errors on invalid commands or options
