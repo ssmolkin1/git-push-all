@@ -1,6 +1,6 @@
 {
   "name": "git-push-all",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "bin": {
     "gal": "gal.js"
   },
