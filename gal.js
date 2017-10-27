@@ -5,7 +5,7 @@ const shell = require('shelljs');
 const commandLineArgs = require('command-line-args');
 const commandLineCommands = require('command-line-commands');
 
-const configPath = './config.json';
+const configPath = `${__dirname}/config.json`;
 const config = require(configPath);
 
 const validCommands = [null, 'config', 'store', 's', 'b'];
@@ -37,20 +37,20 @@ else if (command === 'store') {
   console.log('Initializing git credential storage with libsecret');
 
   // checks if you have a libsecret folder in your git credentials file and mkdir if not
-  var path = '/usr/share/doc/git/contrib/credential';
-  if (shell.ls(path).indexOf('libsecret') < 0) {
+  var storePath = '/usr/share/doc/git/contrib/credential';
+  if (shell.ls(storePath).indexOf('libsecret') < 0) {
     // checks for curl, otherwise cannot continue
     if (!shell.which('curl')) {
       console.log('You are not set up yet to store git credentials using libsecret. Gal can set this up for you, but curl is required to install the necessary files. Please install curl and try again.');
       shell.exit(1);
     }
-    console.log(`Making credential storage folder: ${path}/libsecret`);
-    shell.exec(`sudo mkdir ${path}/libsecret`);
+    console.log(`Making credential storage folder: ${storePath}/libsecret`);
+    shell.exec(`sudo mkdir ${storePath}/libsecret`);
     console.log('Done!');
   } 
   
-  path += '/libsecret'; 
-  const libsecretContents = shell.ls(path);
+  storePath += '/libsecret'; 
+  const libsecretContents = shell.ls(storePath);
     
   // checks if you have the Makefile and curl if not
   if (libsecretContents.indexOf('Makefile') < 0) {
@@ -59,7 +59,7 @@ else if (command === 'store') {
       shell.exit(1);
     }
     console.log(`Downloading Makefile...`);
-    shell.exec(`sudo curl -o ${path}/Makefile https://raw.githubusercontent.com/git/git/master/contrib/credential/libsecret/Makefile`);
+    shell.exec(`sudo curl -o ${storePath}/Makefile https://raw.githubusercontent.com/git/git/master/contrib/credential/libsecret/Makefile`);
     console.log('Done!');
   }
 
@@ -70,7 +70,7 @@ else if (command === 'store') {
       shell.exit(1);
     }
     console.log('Downloading C file...');
-    shell.exec(`sudo curl -o ${path}/git-credential-libsecret.c https://raw.githubusercontent.com/git/git/master/contrib/credential/libsecret/git-credential-libsecret.c`);
+    shell.exec(`sudo curl -o ${storePath}/git-credential-libsecret.c https://raw.githubusercontent.com/git/git/master/contrib/credential/libsecret/git-credential-libsecret.c`);
     console.log('Done!');
   }
 
@@ -80,7 +80,7 @@ else if (command === 'store') {
     console.log('Done!');
     
     console.log('Building...');
-    shell.exec(`sudo make -C ${path}`);
+    shell.exec(`sudo make -C ${storePath}`);
     console.log('Done!');
   }
 
