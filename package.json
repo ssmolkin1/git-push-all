@@ -1,6 +1,6 @@
 {
   "name": "git-push-all",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "bin": {
     "gal": "gal.js"
   },
@@ -15,6 +15,7 @@
   "dependencies": {
     "command-line-args": "^4.0.7",
     "command-line-commands": "^2.0.1",
+    "command-line-usage": "^4.0.1",
     "shelljs": "^0.7.8"
   }
 }
