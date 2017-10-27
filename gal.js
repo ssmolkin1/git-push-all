@@ -4,11 +4,12 @@ const fs = require('fs');
 const shell = require('shelljs');
 const commandLineArgs = require('command-line-args');
 const commandLineCommands = require('command-line-commands');
+const getUsage = require('command-line-usage');
 
 const configPath = `${__dirname}/config.json`;
 const config = require(configPath);
 
-const validCommands = [null, 'config', 'store', 's', 'b'];
+const validCommands = [null, 'config', 'store', 's', 'b', 'help'];
 const {command, argv} = commandLineCommands(validCommands);
 
 // Utility requires git to work
