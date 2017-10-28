@@ -211,21 +211,21 @@ else if (command === 'M') {
       name: 'from', 
       alias: 'f',
       type: String,
-      defaultOption: currentBranch,
+      defaultValue: currentBranch,
       description: 'Branch being merged from. Defaults to current branch.'
     },
     {
       name: 'into', 
       alias: 't',
       type: String,
-      defaultOption: 'master',
+      defaultValue: 'master',
       description: 'Branch being merged into. Defaults to master.'
     },
     {
       name: 'remote', 
       alias: 'r',
       type: String,
-      defaultOption: config.remote,
+      defaultValue: config.remote,
       description: 'Branch being merged into. Defaults to master.'
     },
     {
