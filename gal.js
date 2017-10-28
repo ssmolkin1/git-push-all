@@ -203,7 +203,7 @@ else if (command === 'b') {
     shell.exec('git branch');
   }
 }
-// store command sets up credential storage using libsecret. Requires curl and only works on Debian-based Linux distros (uses apt repository)
+// store command sets up credential storage using libsecret. Requires curl and only works on Debian-based-based Linux distros (uses apt repository)
 else if (command === 'store') {
   const optionDefinitions = [
     {
@@ -222,7 +222,7 @@ else if (command === 'store') {
     shell.config.silent = true;
   
     if (!shell.which('apt')) {
-      console.log('Sorry, gal can only set up your credential storage if you are running a Debian-based Linux distribution.');
+      console.log('Sorry, gal can only set up your credential storage if you are running a Debian-based-based Linux distribution.');
       shell.exit(1);
     }
     
@@ -287,7 +287,7 @@ function printHelpPage(command, optionDefinitions) {
   const commandList = {
     store: {
       name: 'store',
-      summary: "Automatically sets up git credential storage with libsecret (on Linux Debian distros only)."
+      summary: "Automatically sets up git credential storage with libsecret (on Linux Debian-based distros only)."
     },
     config: {
       name: 'config',
@@ -320,7 +320,7 @@ function printHelpPage(command, optionDefinitions) {
   if (!command) {   // Show title and command list only for 'gal -h'
     sections.unshift({
       header: 'Git-push-all',
-      content: 'A git utility to quickly commit and push your entire branch. Also automates setup of git credential storage with libsecret (on Linux Debian distros only).'
+      content: 'A git utility to quickly commit and push your entire branch. Also automates setup of git credential storage with libsecret (on Linux Debian-based distros only).'
       });
 
     const commandDescriptions = [];
