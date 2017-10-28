@@ -18,7 +18,7 @@ const config = require(configPath);
 
 const currentBranch = shell.exec('git branch | grep \\*', {silent:true}).stdout.slice(2);
 
-const validCommands = [null, 'config', 's', 'b', 'm', 'store'];
+const validCommands = [null, 'config', 's', 'b', 'M', 'store'];
 const {command, argv} = commandLineCommands(validCommands);
 
 // If no command, run gal with options
@@ -205,14 +205,14 @@ else if (command === 'b') {
   }
 }
 // m command merges two branches and pushes to remote
-else if (command === 'm') {
+else if (command === 'M') {
   const optionDefinitions = [
     {
       name: 'from', 
-      alias: '-f',
+      alias: 'f',
       type: String,
       defaultOption: currentBranch,
-      description: 'Branch being merged from. Defaults to current branch'
+      description: 'Branch being merged from. Defaults to current branch.'
     },
     {
       name: 'into', 
@@ -353,8 +353,8 @@ function printHelpPage(command, optionDefinitions) {
       name: 'b',
       description: 'Runs \'git branch\'.'
     },
-    m: {
-      name: 'm',
+    M: {
+      name: 'M',
       description: 'Merges two branches and pushes the merged branch.'
     } 
   };
