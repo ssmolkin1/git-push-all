@@ -16,12 +16,13 @@ const getUsage = require('command-line-usage');
 const configPath = `${__dirname}/config.json`;
 const config = require(configPath);
 
-const validCommands = [null, 'config', 's', 'b', 'store'];
+const currentBranch = shell.exec('git branch | grep \\*', {silent:true}).stdout.slice(2);
+
+const validCommands = [null, 'config', 's', 'b', 'm', 'store'];
 const {command, argv} = commandLineCommands(validCommands);
 
 // If no command, run gal with options
 if (command === null) {
-  const currentBranch = shell.exec('git branch | grep \\*', {silent:true}).stdout.slice(2);
 
   const optionDefinitions = [
     {
@@ -203,6 +204,57 @@ else if (command === 'b') {
     shell.exec('git branch');
   }
 }
+// m command merges two branches and pushes to remote
+else if (command === 'm') {
+  const optionDefinitions = [
+    {
+      name: 'from', 
+      alias: '-f',
+      type: String,
+      defaultOption: currentBranch,
+      description: 'Branch being merged from. Defaults to current branch'
+    },
+    {
+      name: 'into', 
+      alias: 't',
+      type: String,
+      defaultOption: 'master',
+      description: 'Branch being merged into. Defaults to master.'
+    },
+    {
+      name: 'remote', 
+      alias: 'r',
+      type: String,
+      defaultOption: config.remote,
+      description: 'Branch being merged into. Defaults to master.'
+    },
+    {
+      name: 'no-push', 
+      alias: 'n',
+      type: Boolean,
+      description: 'Do not push following merge.'
+    },
+    {
+      name: 'help', 
+      alias: 'h',
+      type: Boolean,
+      description: 'Prints this help page.'
+    }
+  ];
+
+  const options = commandLineArgs(optionDefinitions, {argv});
+  
+  if (options.help) {
+    printHelpPage(command, optionDefinitions);
+  } else {
+    shell.exec(`git checkout ${options.into} &&
+    git merge ${options.from}`);
+
+    if (!options['no-push']) {
+      shell.exec(`git push -u ${options.remote} ${options.into}`);
+    }
+  }
+}
 // store command sets up credential storage using libsecret. Requires curl and only works on Debian-based-based Linux distros (uses apt repository)
 else if (command === 'store') {
   const optionDefinitions = [
@@ -300,6 +352,10 @@ function printHelpPage(command, optionDefinitions) {
     b: {
       name: 'b',
       description: 'Runs \'git branch\'.'
+    },
+    m: {
+      name: 'm',
+      description: 'Merges two branches and pushes the merged branch.'
     } 
   };
 
