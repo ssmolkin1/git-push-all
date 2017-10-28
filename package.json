@@ -1,15 +1,19 @@
 {
   "name": "git-push-all",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "bin": {
     "gal": "gal.js"
   },
   "description": "Quickly commit all changes and push to GitHub",
   "main": "gal.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssmolkin1/git-push-all"
   },
-  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/ssmolkin1/git-push-all/issues"
+  },
+  "keywords": ["git", "quick", "commit", "credentials", "libsecret", "GitHub"],
   "author": "Samuel Smolkin <sam@future-precedent.org>",
   "license": "GPL-3.0",
   "dependencies": {
