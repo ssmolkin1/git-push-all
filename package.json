@@ -1,6 +1,6 @@
 {
   "name": "git-push-all",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "bin": {
     "gal": "gal.js"
   },
@@ -13,7 +13,14 @@
   "bugs": {
     "url": "https://github.com/ssmolkin1/git-push-all/issues"
   },
-  "keywords": ["git", "quick", "commit", "credentials", "libsecret", "GitHub"],
+  "keywords": [
+    "git",
+    "quick",
+    "commit",
+    "credentials",
+    "libsecret",
+    "GitHub"
+  ],
   "author": "Samuel Smolkin <sam@future-precedent.org>",
   "license": "GPL-3.0",
   "dependencies": {

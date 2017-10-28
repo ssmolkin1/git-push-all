@@ -22,7 +22,7 @@ The `<DEFAULT MESSAGE>` and `<DEFAULT REMOTE>` are saved in your `config.json` f
 
 So:
 ```bash
-$ gal -m My fancy commit message. -r some-remote -b some-message
+$ gal -m My fancy commit message. -r some-remote -b some-branch
 ```
 runs:
 ```bash

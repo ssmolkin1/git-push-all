@@ -381,7 +381,7 @@ function printHelpPage(command, optionDefinitions) {
 
     const commandDescriptions = [];
 
-    for (x in commandList) {
+    for (let x in commandList) {
       commandDescriptions.push(commandList[x]);
     }
     
