@@ -53,6 +53,8 @@ $ git merge first-branch
 $ git push -u some-remote second-branch
 ```
 
+The `[n | --no-push]` option will prevent the push at the end.
+
 #### gal config [-m | --message] [-r | --remote] 
 Running this command without options prints your `config.json` file, which contains your default remote and commit message. You can change the default settings with the `-m | --message` and `-r | remote` options.
 
