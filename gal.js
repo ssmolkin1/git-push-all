@@ -45,7 +45,7 @@ if (command === null) {
       name: 'branch',
       alias: 'b',
       type: String,
-      defaultValue: currentBranch,
+      defaultValue: currentBranch || 'master',    // Defaults to master if no branch set (for initial push)
       description: 'Set branch. Default is the current branch.'
     },
     {
