@@ -1,5 +1,5 @@
 # Git-push-all (gal)
-`gal` is a small utility allowing you to quickly commit and push your entire git branch. Gal also automates setup of git credential storage with `libsecret` (works with Linux Debian distros only).
+`gal` is a small utility allowing you to quickly commit and push your entire git branch. Gal also automates setup of git credential storage with `libsecret` (works with Linux Arch-based distros only).
 
 ## Installation
 ```bash

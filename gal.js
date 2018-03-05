@@ -255,7 +255,7 @@ else if (command === 'M') {
     }
   }
 }
-// store command sets up credential storage using libsecret. Requires curl and only works on Debian-based-based Linux distros (uses apt repository)
+// store command sets up credential storage using libsecret. Requires curl and only works on Arch-based Linux distros (uses pacman as package manager)
 else if (command === 'store') {
   const optionDefinitions = [
     {
@@ -273,8 +273,8 @@ else if (command === 'store') {
   } else {
     shell.config.silent = true;
   
-    if (!shell.which('apt')) {
-      console.log('Sorry, gal can only set up your credential storage if you are running a Debian-based-based Linux distribution.');
+    if (!shell.which('pacman')) {
+      console.log('Sorry, gal can only set up your credential storage if you are running a Arch-based Linux distribution with pacman installed.');
       shell.exit(1);
     }
     
@@ -320,7 +320,7 @@ else if (command === 'store') {
 
     if (libsecretContents.indexOf('git-credential-libsecret.o') < 0) {
       console.log('Checking for latest libsecret dev file and installing or updating to latest if needed...');
-      shell.exec('sudo apt install libsecret.*dev -y');    
+      shell.exec('sudo pacman -S libsecret.*dev -y');    
       console.log('Done!');
       
       console.log('Building...');
