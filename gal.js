@@ -255,7 +255,7 @@ else if (command === 'M') {
     }
   }
 }
-// store command sets up credential storage using libsecret. Requires curl and only works on Arch-based Linux distros (uses pacman as package manager)
+// store command sets up credential storage using libsecret. 
 else if (command === 'store') {
   const optionDefinitions = [
     {
@@ -272,11 +272,6 @@ else if (command === 'store') {
     printHelpPage(command, optionDefinitions);
   } else {
     shell.config.silent = true;
-  
-    if (!shell.which('pacman')) {
-      console.log('Sorry, gal can only set up your credential storage if you are running a Arch-based Linux distribution with pacman installed.');
-      shell.exit(1);
-    }
     
     console.log('Initializing git credential storage with libsecret');
 
@@ -318,11 +313,13 @@ else if (command === 'store') {
       console.log('Done!');
     }
 
+    // Check if you've already built git-credential-libsecret.o, and build it if not 
     if (libsecretContents.indexOf('git-credential-libsecret.o') < 0) {
-      console.log('Checking for latest libsecret dev file and installing or updating to latest if needed...');
-      shell.exec('sudo pacman -S libsecret.*dev -y');    
-      console.log('Done!');
-      
+      if (!shell.which ('libsecret')) {
+        console.log('You are not set up yet to store git credentials using libsecret. gal can set this up for you, but libsecret is required. Please install libsecret and try again.');
+        shell.exit(1);
+      };
+
       console.log('Building...');
       shell.exec(`sudo make -C ${storePath}`);
       console.log('Done!');

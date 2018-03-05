@@ -1,7 +1,9 @@
 # Git-push-all (gal)
-`gal` is a small utility allowing you to quickly commit and push your entire git branch. Gal also automates setup of git credential storage with `libsecret` (works with Linux Arch-based distros only).
+`gal` is a small utility allowing you to quickly commit and push your entire git branch. Gal also automates setup of git credential storage with `libsecret` (for GNU/Linux).
 
 ## Installation
+You must have `curl` and `libsecret` installed for the `store` command to store your credentials.
+
 ```bash
 $ npm install -g git-push-all
 ```
@@ -69,7 +71,7 @@ $ gal config
 ```
 
 #### gal store
- Automatically sets up git credential storage with `libsecret`. The latest `libsecret` dev files will be installed and the necessary files and folders will be donwloaded and made automatically if not already on your machine. Next time you enter some credentials using git (like your GitHub username and password when on your next push), they will be encrypted and saved on your machine. This will make your future pushes much quicker and easier, since you won't have to type your username and password anymore! For now, this feature konly works on Linux Debian-based distros.
+ Automatically sets up git credential storage with `libsecret`. The latest `libsecret` dev files will be installed and the necessary files and folders will be donwloaded and made automatically if not already on your machine. Next time you enter some credentials using git (like your GitHub username and password when on your next push), they will be encrypted and saved on your machine. This will make your future pushes much quicker and easier, since you won't have to type your username and password anymore! 
 
 ### More features
 Run `gal --help` for a full list of commands and `gal <command> --help` for a full list of options for the desired command.
