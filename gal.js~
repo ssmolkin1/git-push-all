@@ -226,7 +226,7 @@ else if (command === 'M') {
       alias: 'r',
       type: String,
       defaultValue: config.remote,
-      description: 'Remote of the "into" branch'
+      description: 'Branch being merged into. Defaults to master.'
     },
     {
       name: 'no-push', 
