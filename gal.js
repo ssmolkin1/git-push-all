@@ -315,7 +315,7 @@ else if (command === 'store') {
 
     // Check if you've already built git-credential-libsecret.o, and build it if not 
     if (libsecretContents.indexOf('git-credential-libsecret.o') < 0) {
-      if (!shell.which ('libsecret')) {
+      if (shell.exec('ls /lib', {silent: true}).stdout.search(/libsecret/) < 0) {
         console.log('You are not set up yet to store git credentials using libsecret. gal can set this up for you, but libsecret is required. Please install libsecret and try again.');
         shell.exit(1);
       };
