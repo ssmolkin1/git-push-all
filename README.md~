@@ -4,8 +4,6 @@
 ## Installation
 You must have `curl` and `libsecret` installed for the `store` command to store your credentials.
 
-You must also have the following directory on your system for credential storage to work: `/usr/share/doc/git/contrib/credential`. If this directory does not exist on your system, make this directory before proceeding.
-
 ```bash
 $ npm install -g git-push-all
 ```
