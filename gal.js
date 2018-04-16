@@ -276,7 +276,7 @@ else if (command === 'store') {
     console.log('Initializing git credential storage with libsecret');
 
     // checks if you have a libsecret folder in your git credentials file and mkdir if not
-    var storePath = '/usr/share/doc/git/contrib/credential';
+    var storePath = '/usr/share/git/credential';
     if (shell.ls(storePath).indexOf('libsecret') < 0) {
       // checks for curl, otherwise cannot continue
       if (!shell.which('curl')) {
