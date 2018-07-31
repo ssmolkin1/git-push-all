@@ -4,6 +4,9 @@
   "bin": {
     "gal": "gal.js"
   },
+  "scripts": {
+    "dev": "nodemon --inspect-brk gal.js"
+  },
   "description": "Quickly commit all changes and push to GitHub",
   "main": "gal.js",
   "repository": {
@@ -28,5 +31,10 @@
     "command-line-commands": "^2.0.1",
     "command-line-usage": "^4.0.1",
     "shelljs": "^0.7.8"
+  },
+  "devDependencies": {
+    "eslint": "^5.2.0",
+    "nodemon": "^1.18.3",
+    "prettier-eslint": "^8.8.2"
   }
 }
