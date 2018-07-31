@@ -30,13 +30,14 @@ const { command, argv } = (() => {
 
     if (msg) {
       return {
-        command: 'M',
-        argv: [msg]
+        command: null,
+        message: [msg],
+        argv: ['-m', msg]
       }
     }
-  }
 
-  return {}
+    throw e
+  }
 })()
 
 // If no command, run gal with options
@@ -265,8 +266,6 @@ else if (command === 'M') {
   ]
 
   const options = commandLineArgs(optionDefinitions, { argv })
-  console.log(options, argv)
-  process.exit(1)
 
   if (options.help) {
     printHelpPage(command, optionDefinitions)
