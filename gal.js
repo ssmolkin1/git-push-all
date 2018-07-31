@@ -26,9 +26,9 @@ const { command, argv } = (() => {
   try {
     return commandLineCommands(validCommands)
   } catch (e) {
-    const [, , msg] = process.argv
+    const msg = process.argv[process.argv.length - 1] || ''
 
-    if (msg) {
+    if (msg.length) {
       return {
         command: null,
         message: [msg],
