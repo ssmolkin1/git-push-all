@@ -22,9 +22,22 @@ const config = require(configPath)
 const currentBranch = shell.exec('git branch | grep \\*', { silent: true }).stdout.slice(2)
 
 const validCommands = [null, 'config', 's', 'b', 'M', 'store']
-const { command, argv } = commandLineCommands(validCommands)
+const { command, argv } = (() => {
+  try {
+    return commandLineCommands(validCommands)
+  } catch (e) {
+    const [, , msg] = process.argv
 
-console.log(argv)
+    if (msg) {
+      return {
+        command: 'M',
+        argv: [msg]
+      }
+    }
+  }
+
+  return {}
+})()
 
 // If no command, run gal with options
 if (command === null) {
@@ -252,6 +265,8 @@ else if (command === 'M') {
   ]
 
   const options = commandLineArgs(optionDefinitions, { argv })
+  console.log(options, argv)
+  process.exit(1)
 
   if (options.help) {
     printHelpPage(command, optionDefinitions)
